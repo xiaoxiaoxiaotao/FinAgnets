@@ -3,8 +3,6 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai import LLM
 import os
 
-
-
 # Uncomment the following line to use an example of a custom tool
 # from fincrew.tools.custom_tool import MyCustomTool
 
@@ -14,7 +12,7 @@ import os
 puyu_api_key = os.getenv('PuYu_API_KEY')
 
 llm = LLM(
-    model="huggingface/internlm2.5-latest",
+    model="openai/internlm2.5-latest",
     base_url="https://internlm-chat.intern-ai.org.cn/puyu/api/v1/",
     api_key=puyu_api_key
 )
