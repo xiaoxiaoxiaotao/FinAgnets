@@ -1,11 +1,24 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
+from crewai import LLM
+import os
+
+
 
 # Uncomment the following line to use an example of a custom tool
 # from fincrew.tools.custom_tool import MyCustomTool
 
 # Check our tools documentations for more information on how to use them
 # from crewai_tools import SerperDevTool
+
+puyu_api_key = os.getenv('PuYu_API_KEY')
+
+llm = LLM(
+    model="huggingface/internlm2.5-latest",
+    base_url="https://internlm-chat.intern-ai.org.cn/puyu/api/v1/",
+    api_key=puyu_api_key
+)
+
 
 @CrewBase
 class Fincrew():
@@ -17,6 +30,7 @@ class Fincrew():
 	@agent
 	def researcher(self) -> Agent:
 		return Agent(
+			llm=llm,
 			config=self.agents_config['researcher'],
 			# tools=[MyCustomTool()], # Example of custom tool, loaded on the beginning of file
 			verbose=True
@@ -25,6 +39,7 @@ class Fincrew():
 	@agent
 	def reporting_analyst(self) -> Agent:
 		return Agent(
+			llm=llm,
 			config=self.agents_config['reporting_analyst'],
 			verbose=True
 		)
